@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="prism.css" rel="stylesheet" />
+  <title>Spread Operators</title>
+</head>
+<body>
+  <div class="container">
+    <h1>SpreadOperator</h1>
+    <h2>Una forma muy eficiente de añadir mucho contenido sin ocupar recursos</h2>
+    <p>Este proyecto tiene como fin mostrar una forma muy eficiente de mostrar elementos, por ejemplo, de una API sin realizar constantes modificaciones del DOM por cada elemento.</p>
+    <p>En este caso, se podría imaginar que mediante un bucle se va añadiendo el contenido al DOM, es decir, si tenemos 20 llamadas a la API hay 20 modificaciones. Sin embargo en este caso solo hay una modificación. ¿cómo es esto? gracias al operador de propagación.</p>
+    <h2>Código</h2>
+
+    <pre><code class="language-js">//AQUÍ SE RESUELVE TODO
+appNode.append(...allItems);</code></pre>
+    <pre><code class="language-js">const miFuncion = async (url_api) => {
+      let response = await fetch(url_api);
+      try {
+        const responseJson = await response.json();
+        const allItems = [];
+    
+        responseJson.data.forEach((item) => {
+          // create image
+          const image = document.createElement("img");
+          image.src = `${base_url}${item.image}`;
+          // create title
+          const title = document.createElement("h2");
+          title.textContent = item.name;
+          title.className = "grande";
+          // create price
+          const price = document.createElement("div");
+          price.textContent = formatPrice(item.price);
+    
+          const container = document.createElement("div");
+          container.append(image, title, price);
+    
+          allItems.push(container);
+        });
+        //UTILIZAMOS OPERADOR DE PROPAGACIÓN PARA INTEGRAR TODO A LA VEZ
+        appNode.append(...allItems);
+      } catch (e) {
+        console.log(e);
+      }
+    };</code></pre>
+
+    <div id="app"></div>
+  </div>
+
+
+  
+  <script src="main.js"></script>
+  <script src="prism.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
